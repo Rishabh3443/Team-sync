@@ -265,19 +265,7 @@ npm run build
 
 Creates an optimized production build.
 
-### Lint
 
-```bash
-npm run lint
-```
-
-Runs ESLint to check the codebase.
-
-### Preview
-
-```bash
-npm run preview
-```
 
 Runs a local preview of the production build.
 
