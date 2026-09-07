@@ -1,119 +1,141 @@
 # Team Sync
 
-A role-based employee management and team collaboration frontend built with **React** and **Vite**.
+**Team Sync** is a role-based employee management and team administration web application built with React.
 
-Team Sync provides separate workflows for **administrators** and **employees**, with protected routing, authentication, employee management, task management, attendance, departments, documents, and profile management.
+The application provides separate experiences for **Administrators** and **Employees**, with authentication, protected routes, role-based authorization, employee management, task management, department management, document management, attendance, and profile management.
 
-## 🚀 Features
+## ✨ Features
 
-### Authentication
+### 🔐 Authentication
 
-* User registration and login
-* Authentication-aware routing
-* Persistent logged-in employee state
-* Automatic access-token refresh on `401` responses
-* Redirect to login when authentication fails
+* User registration
+* User login
+* Authentication state management
+* Protected application routes
+* Public and private route handling
+* Automatic authentication state verification
 
-### Role-Based Access
+### 👨‍💼 Admin Module
 
-The application separates access based on user roles:
+Administrators have access to management features such as:
 
-**Admin**
-
-* Employee management
+* View employees
 * Add employees
+* Employee statistics
+* Search and filter employees
+* Employee pagination
 * Task management
 * Department management
 * Document management
 
-**Employee**
+### 👨‍💻 Employee Module
 
-* View and manage assigned tasks
+Employees have access to their own workspace, including:
+
+* My Tasks
 * Attendance
 * Profile management
 
-Common dashboard routes are also available to authenticated users.
+### 🛡️ Role-Based Authorization
+
+The application uses role-based routing to control access to different sections of the dashboard.
+
+There are dedicated route configurations for:
+
+* Common routes
+* Admin routes
+* Employee routes
+
+This prevents users from accessing pages that are not intended for their role.
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 
-* React
-* React Router
-* Vite
-* Tailwind CSS
+* **React**
+* **Vite**
+* **React Router**
+* **Tailwind CSS**
 
 ### State Management
 
-* Redux Toolkit
-* React Redux
-* TanStack React Query
+* **Redux Toolkit**
+* **React Redux**
+* **TanStack React Query**
 
-### Forms & API
+### API & Forms
 
-* React Hook Form
-* Axios
-* Axios Interceptors
+* **Axios**
+* **React Hook Form**
 
 ### UI
 
-* Lucide React
+* **Lucide React**
 
-The project dependencies are defined in `package.json`.
-
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 src/
+│
 ├── app/
 │   ├── constants/
 │   │   └── navigations.jsx
+│   │
 │   ├── layouts/
 │   │   ├── AuthLayout.jsx
 │   │   └── DashboardLayout.jsx
+│   │
 │   ├── protectedRoutes/
 │   │   ├── ProtectedRoute.jsx
 │   │   ├── PublicRoute.jsx
 │   │   └── RoleBaseRoute.jsx
+│   │
 │   ├── routes/
 │   │   ├── AppRoutes.jsx
 │   │   ├── adminRoutes.jsx
 │   │   ├── commonRoutes.jsx
 │   │   └── employeeRoutes.jsx
+│   │
 │   └── store.jsx
 │
 ├── config/
 │   └── axiosInstance.jsx
 │
 ├── features/
+│   │
 │   ├── auth/
+│   │   └── ...
+│   │
 │   ├── dashboard/
+│   │   └── ...
+│   │
 │   ├── admin module/
 │   │   ├── departments/
 │   │   ├── documents/
 │   │   ├── employees/
 │   │   └── tasks/
+│   │
 │   └── employee module/
 │       ├── Attendance/
 │       ├── MyTask/
 │       └── profile/
+│
+├── assets/
 │
 ├── App.jsx
 ├── main.jsx
 └── index.css
 ```
 
-The project follows a feature-oriented structure, separating application-level routing/layout logic from individual business modules.
+## 🧭 Application Routes
 
-## 🔐 Routing & Authorization
+### Public Routes
 
-Team Sync uses React Router with dedicated route guards:
-
-* `PublicRoute` protects authentication pages from already authenticated users.
-* `ProtectedRoute` ensures authenticated users can access the dashboard.
-* `RoleBaseRoute` restricts routes based on the user's role.
-
-The main application routes are organized under `/` for authentication and `/home` for authenticated dashboard functionality.
+```text
+/
+├── Login
+└── /register
+```
 
 ### Admin Routes
 
@@ -133,32 +155,71 @@ The main application routes are organized under `/` for authentication and `/hom
 /home/profile
 ```
 
-These route groups are explicitly separated in the application routing configuration.
-
-## 🌐 API Integration
-
-The frontend communicates with the Team Sync backend through a centralized Axios instance.
-
-```js
-baseURL: "https://api.team-sync.space/api"
-```
-
-The Axios configuration uses credentials and includes response interception for authentication failures. When a request receives a `401`, the application attempts to obtain a new access token and retries the original request.
+Authenticated users enter the dashboard through the `/home` route, while role-based route guards determine which admin or employee pages they can access.
 
 ## 👥 Employee Management
 
-The admin employee module includes:
+The employee management section provides an administrative interface for working with employees.
 
-* Employee statistics
+It includes:
+
 * Employee listing
+* Employee statistics
 * Search and filtering
 * Pagination
 * Employee-related actions
-* Employee creation
+* Add employee functionality
 
-The employee page is composed from dedicated UI components such as `EmployeeHeader`, `EmployeeStats`, `SearchFilterBar`, `EmployeeTable`, and `Pagination`.
+The employee interface is divided into reusable components such as:
 
-## ⚙️ Getting Started
+```text
+EmployeeHeader
+EmployeeStats
+SearchFilterBar
+EmployeeTable
+Pagination
+```
+
+This keeps the page structure modular and easier to maintain.
+
+## 🔄 Data Management
+
+The application uses different tools for different types of state:
+
+* **Redux Toolkit** for global application state
+* **TanStack React Query** for server-side data and asynchronous requests
+* **Axios** for HTTP communication
+* **React Hook Form** for form handling and validation
+
+This separation helps keep UI state, application state, and server data organized.
+
+## 🔒 Protected Routes
+
+Team Sync uses multiple route guards:
+
+### PublicRoute
+
+Controls access to authentication-related pages.
+
+### ProtectedRoute
+
+Ensures that only authenticated users can access the main application.
+
+### RoleBaseRoute
+
+Checks the user's role before allowing access to role-specific pages.
+
+The routing architecture is organized so that authentication and authorization are handled before rendering protected dashboard features.
+
+## 🎨 UI & Styling
+
+The application uses **Tailwind CSS** for styling and utility-based responsive layouts.
+
+Reusable components are used throughout the dashboard to keep the UI consistent and maintainable.
+
+**Lucide React** is used for interface icons.
+
+## ⚙️ Installation
 
 ### 1. Clone the repository
 
@@ -166,7 +227,7 @@ The employee page is composed from dedicated UI components such as `EmployeeHead
 git clone https://github.com/Devendradhote001/final_project_Frontend.git
 ```
 
-### 2. Navigate into the project
+### 2. Navigate to the project
 
 ```bash
 cd final_project_Frontend
@@ -184,67 +245,87 @@ npm install
 npm run dev
 ```
 
-The project uses Vite for local development and provides the standard `dev`, `build`, `lint`, and `preview` scripts.
+The application will start using the Vite development server.
 
-## 📦 Available Scripts
+## 📜 Available Scripts
+
+### Development
 
 ```bash
 npm run dev
 ```
 
-Starts the Vite development server.
+Starts the development server.
+
+### Production Build
 
 ```bash
 npm run build
 ```
 
-Creates a production build.
+Creates an optimized production build.
+
+### Lint
 
 ```bash
 npm run lint
 ```
 
-Runs ESLint across the project.
+Runs ESLint to check the codebase.
+
+### Preview
 
 ```bash
 npm run preview
 ```
 
-Previews the production build locally.
+Runs a local preview of the production build.
 
 ## 🏗️ Architecture
 
-The application is organized around a few core architectural ideas:
+The project follows a **feature-based frontend architecture**.
 
-**Feature-based organization**
-Business functionality is grouped into independent feature modules.
+Instead of putting every component, page, and logic file into a single large folder, functionality is divided into independent modules.
 
-**Centralized state management**
-Redux Toolkit and React Redux are used for application state, while TanStack React Query handles server-state and data-fetching concerns.
+For example:
 
-**Protected and role-based routing**
-Authentication and authorization are enforced at the routing level instead of relying only on individual pages.
+```text
+features/
+├── auth/
+├── dashboard/
+├── admin module/
+└── employee module/
+```
 
-**Reusable API layer**
-Axios configuration is centralized so API calls and authentication-refresh behavior can be handled consistently.
+Application-level concerns such as routing, layouts, protected routes, and global state are kept separately inside `app/`.
 
-## 🔮 Future Improvements
+This structure makes the project easier to:
 
-Potential improvements include:
+* Maintain
+* Scale
+* Debug
+* Add new features
+* Reuse components
+* Manage role-specific functionality
 
-* Better loading and error states
-* More robust form validation
-* Enhanced responsive design
-* Automated testing
-* Improved accessibility
-* Better empty-state handling
-* More granular permissions
-* Production monitoring and error tracking
+## 🚀 Future Improvements
+
+Possible improvements for future versions include:
+
+* Comprehensive automated testing
+* Improved loading and error states
+* More granular role permissions
+* Enhanced accessibility
+* Improved mobile responsiveness
+* Better form validation and feedback
+* Advanced employee analytics
+* Notification system
+* Improved dashboard customization
 
 ## 📄 License
 
-This project is intended for learning and project-development purposes.
+This project is developed for educational and project purposes.
 
 ---
 
-Built with **React + Vite**.
+**Team Sync** — Employee Management & Team Administration Platform
