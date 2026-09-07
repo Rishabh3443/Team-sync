@@ -224,7 +224,7 @@ Reusable components are used throughout the dashboard to keep the UI consistent 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Devendradhote001/final_project_Frontend.git
+git clone https://github.com/Rishabh3443/Team-sync.git
 ```
 
 ### 2. Navigate to the project
